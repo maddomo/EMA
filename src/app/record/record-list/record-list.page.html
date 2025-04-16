@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Leistungen</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showStats()"> 
+        <ion-icon slot="icon-only" name="stats-chart-outline"></ion-icon> 
+       </ion-button> 
+       <ion-button (click)="createRecord()"> 
+        <ion-icon slot="icon-only" name="add"></ion-icon> 
+       </ion-button> 
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list> 
+    @for (record of records; track record.id) { 
+            <ion-item button> 
+    {{ record.moduleName }} {{ record.moduleNr }} 
+              ({{ 
+    record.grade }}%, {{ record.crp }}crp) 
+            </ion-item> 
+          } 
+        </ion-list> 
+</ion-content>
