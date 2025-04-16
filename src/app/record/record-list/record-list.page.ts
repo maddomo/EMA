@@ -33,7 +33,7 @@ export class RecordListPage implements OnInit {
 
   showStats(): void {
     const stats: Statistic = new Statistic(this.records)
-    console.log(`Anzahl Kurse: ${stats.recordCount}\n Anzahl der halbgewichteten Kurse: ${stats.hwCount}`)
+    console.log(stats.toString())
   }
 
   ngOnInit() {

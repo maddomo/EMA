@@ -49,5 +49,12 @@ export class Statistic{
     }
 
 
+    toString():string {
+        return `Anzahl der erfassten leistungen: ${this.recordCount}\n
+        Anzahl der erfassten halbgewichteten Leistungen ${this.hwCount}\n
+        Summe der Credit Points: ${this.sumCrp}\n
+        Credit Points bis zum Abschluss: ${this.crpToEnd}\n
+        Durchschnittsnote: ${this.averageGrade}`
+    }
 
 }
