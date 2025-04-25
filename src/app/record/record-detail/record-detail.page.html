@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+
+    <ion-title>{{pageTitle}}</ion-title>
+    
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      @if (isEditMode){
+        <ion-button (click)="deleteRecord(record.id ?? 0)">
+          <ion-icon slot="icon-only" name="trash">
+          </ion-icon>
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <ion-input class="ion-text-end"
+    [(ngModel)] = record.moduleNr
+    label="Modulnr*"
+    fill="solid"
+    type="text"
+    maxlength="10"
+    [counter]="true"
+    required>
+  </ion-input>
+  @if (errors.get('moduleNr')) {
+    <ion-text color="danger">
+    <p class="ion-text-end ion-no-margin ion-padding-end">
+    {{errors.get('moduleNr')}}
+    </p>
+    </ion-text>
+  }
+  
+  <ion-input class="ion-text-end"
+    [(ngModel)] = record.moduleName
+    label="Name*"
+    fill="solid"
+    type="text"
+    maxlength="100"
+    [counter]="true"
+    required>
+  </ion-input>
+  @if (errors.get('moduleName')) {
+    <ion-text color="danger">
+    <p class="ion-text-end ion-no-margin ion-padding-end">
+    {{errors.get('moduleName')}}
+    </p>
+    </ion-text>
+  } 
+
+  <ion-item fill="solid">
+    <ion-checkbox [(ngModel)]=record.summer>Sommersemester</ion-checkbox>
+  </ion-item>
+
+  <ion-select [(ngModel)]=record.year fill="solid" label="Jahr" interface="popover">
+    @for (year of years; track year) {
+      <ion-select-option [value]="year">{{year}}
+      </ion-select-option>
+    }
+  </ion-select>
+
+  <ion-input class="ion-text-end"
+    [(ngModel)] = record.crp
+    label="Creditpoints*"
+    fill="solid"
+    type="number"
+    required>
+  </ion-input>
+  @if (errors.get('crp')) {
+    <ion-text color="danger">
+    <p class="ion-text-end ion-no-margin ion-padding-end">
+    {{errors.get('crp')}}
+    </p>
+    </ion-text>
+  }
+  
+
+  <ion-input class="ion-text-end"
+    [(ngModel)]= record.grade
+    label="Note"
+    fill="solid"
+    type="number"
+    required>
+  </ion-input>
+  @if (errors.get('grade')) {
+    <ion-text color="danger">
+    <p class="ion-text-end ion-no-margin ion-padding-end">
+    {{errors.get('grade')}}
+    </p>
+    </ion-text>
+  }
+  
+
+  <ion-item fill="solid">
+    <ion-checkbox [(ngModel)]=record.halfWeight >50%-Leistung</ion-checkbox>
+  </ion-item>
+
+  <ion-button class="ion-padding" expand="block" (click)="save()">
+    Speichern
+  </ion-button> 
+    
+</ion-content>

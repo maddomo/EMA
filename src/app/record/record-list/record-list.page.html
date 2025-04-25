@@ -15,7 +15,7 @@
 <ion-content [fullscreen]="true">
   <ion-list> 
     @for (record of records; track record.id) { 
-            <ion-item button> 
+            <ion-item button (click)="editRecord(record)"> 
     {{ record.moduleName }} {{ record.moduleNr }} 
               ({{ 
     record.grade }}%, {{ record.crp }}crp) 

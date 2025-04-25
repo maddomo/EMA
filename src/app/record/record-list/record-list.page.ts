@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonList, IonItem } from '@ionic/angular/standalone';
 import { Record } from '../record.model';
 import { Statistic } from '../statistic.model';
+import { Router } from '@angular/router';
+import { RecordService } from '../record.service';
 
 @Component({
   selector: 'app-record-list',
@@ -19,16 +21,16 @@ import { Statistic } from '../statistic.model';
 export class RecordListPage implements OnInit {
   records: Record[] = []
 
-  constructor() { 
-    this.records.push(
-      new Record(1, 'CS1019', 'Compilerbau', 6, 78, false, true, 2010), 
-      new Record(2, 'CS1022', 'Betriebssysteme', 6, 71, false, false, 2009), 
-      new Record(3, 'CS4711', 'OOP', 6, 81, false, false, 2011) 
-    )
+  constructor(private router: Router, private recordService: RecordService) { 
+    this.records = recordService.findAll();
   }
 
   createRecord(): void {
-    console.log("Not implement yet!")
+    this.router.navigate(["record-detail"])
+  }
+
+  editRecord(record: { id: any; }){
+    this.router.navigate(["record-detail", {id: record.id}])
   }
 
   showStats(): void {
