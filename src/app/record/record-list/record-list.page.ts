@@ -21,9 +21,7 @@ import { RecordService } from '../record.service';
 export class RecordListPage implements OnInit {
   records: Record[] = []
 
-  constructor(private router: Router, private recordService: RecordService) { 
-    this.records = recordService.findAll();
-  }
+  constructor(private router: Router, private recordService: RecordService) {}
 
   createRecord(): void {
     this.router.navigate(["record-detail"])
@@ -39,6 +37,7 @@ export class RecordListPage implements OnInit {
   }
 
   ngOnInit() {
+    this.records = this.recordService.findAll();
   }
 
   
