@@ -21,15 +21,14 @@ import { RecordService } from '../record.service';
 export class RecordListPage implements OnInit {
   records: Record[] = []
   alertButtons = ["Schließen"]
-  isEmpty: boolean;
+  isEmpty: boolean = false;
   message = ""
 
-  constructor(private router: Router, private recordService: RecordService, private alertCtrl: AlertController) {
-    if(this.records.length === 0){
-      this.isEmpty = true
-    }else{
-      this.isEmpty = false
-    }
+  constructor(private router: Router, private recordService: RecordService, private alertCtrl: AlertController) {}
+
+  updateRecordList() {
+    this.records = this.recordService.findAll();
+    this.isEmpty = this.records.length === 0;
   }
 
   createRecord(): void {
@@ -41,7 +40,11 @@ export class RecordListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.records = this.recordService.findAll();
+    this.updateRecordList();
+  }
+
+  ionViewWillEnter() {
+    this.updateRecordList();
   }
 
   showStats(){
@@ -67,6 +70,7 @@ export class RecordListPage implements OnInit {
           handler: () => {
             this.recordService.delete(id ?? -1)
             slidingItem.close()
+            this.updateRecordList();
           }
         }
       ]
