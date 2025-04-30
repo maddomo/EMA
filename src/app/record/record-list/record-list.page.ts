@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonAlert, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonList, IonItem } from '@ionic/angular/standalone';
+import { AlertController, IonAlert, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
 import { Record } from '../record.model';
 import { Statistic } from '../statistic.model';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { RecordService } from '../record.service';
   templateUrl: './record-list.page.html',
   styleUrls: ['./record-list.page.scss'],
   standalone: true,
-  imports: [IonAlert, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonButtons, IonIcon, IonList, IonItem]
+  imports: [IonCardContent, IonCardTitle, IonCardHeader, IonCard, IonAlert, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonButtons, IonIcon, IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption]
 })
 
 
@@ -21,8 +21,15 @@ import { RecordService } from '../record.service';
 export class RecordListPage implements OnInit {
   records: Record[] = []
   alertButtons = ["Schließen"]
+  isEmpty: boolean;
   message = ""
-  constructor(private router: Router, private recordService: RecordService) {
+
+  constructor(private router: Router, private recordService: RecordService, private alertCtrl: AlertController) {
+    if(this.records.length === 0){
+      this.isEmpty = true
+    }else{
+      this.isEmpty = false
+    }
   }
 
   createRecord(): void {
@@ -40,6 +47,31 @@ export class RecordListPage implements OnInit {
   showStats(){
     const stats: Statistic = new Statistic(this.records)
     this.message = stats.toString()
+  }
+
+  async deleteRecord(id: number | null, slidingItem: IonItemSliding){
+    const alert = await this.alertCtrl.create({
+      header: "Wollen Sie das Record wirklich löschen?",
+      message: "",
+      buttons: [
+        {
+          text: "Abbrechen",
+          role: "cancel",
+          handler: () => {
+            slidingItem.close()
+          }
+        },
+        {
+          text: "Löschen",
+          role: "destructive",
+          handler: () => {
+            this.recordService.delete(id ?? -1)
+            slidingItem.close()
+          }
+        }
+      ]
+    })
+    await alert.present();
   }
 
 

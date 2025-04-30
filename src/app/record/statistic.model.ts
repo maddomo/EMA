@@ -53,7 +53,7 @@ export class Statistic{
         return `Anzahl Module: ${this.recordCount}<br>
                 50%-Leistungen: ${this.hwCount} <br>
                 Summe Crp: ${this.sumCrp} <br>
-                Crp bis Ziehl: ${this.crpToEnd} <br>
+                Crp bis Ziel: ${this.crpToEnd} <br>
                 Durchschnitt: ${this.averageGrade}`
     }
 
