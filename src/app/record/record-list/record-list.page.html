@@ -2,9 +2,16 @@
   <ion-toolbar color="primary">
     <ion-title>Leistungen</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="showStats()"> 
+      <ion-button id="present-alert" (click)="showStats()"> 
         <ion-icon slot="icon-only" name="stats-chart-outline"></ion-icon> 
-       </ion-button> 
+       </ion-button>
+       <ion-alert
+        trigger="present-alert"
+        header="Statistik"
+        message={{message}}
+        [buttons] = "alertButtons"
+       >
+       </ion-alert> 
        <ion-button (click)="createRecord()"> 
         <ion-icon slot="icon-only" name="add"></ion-icon> 
        </ion-button> 

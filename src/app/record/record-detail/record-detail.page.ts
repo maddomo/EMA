@@ -72,8 +72,16 @@ export class RecordDetailPage implements OnInit {
       this.errors.set("crp", "Creditpoints darf nicht leer sein!")
     }
 
+    if(this.record.crp !== 3 && this.record.crp !== 6 && this.record.crp !== 9 ){
+      this.errors.set("crp", "Bitte geben sie eine gültige Zahl für Creditpoints ein!")
+    }
+
     if(!this.record.grade){
       this.errors.set("grade", "Note darf nicht leer sein!")
+    }
+
+    if(this.record.grade < 50 || this.record.grade > 100){
+      this.errors.set("grade", "Geben sie eine gültige Zahl für Note ein!")
     }
 
 
