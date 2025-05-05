@@ -1,7 +1,13 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" *ngIf="!showSearchbar">
     <ion-title>Leistungen</ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="searchRecords()">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button (click)="shareRecords()">
+        <ion-icon slot="icon-only" name="share"></ion-icon>
+      </ion-button>
       <ion-button id="present-alert" (click)="showStats()"> 
         <ion-icon slot="icon-only" name="stats-chart-outline"></ion-icon> 
        </ion-button>
@@ -17,6 +23,15 @@
        </ion-button> 
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar color="primary" *ngIf="showSearchbar">
+    <ion-searchbar 
+    [(ngModel)]="searchText" 
+    placeholder="Suche nach Modulname oder Nr."
+    showCancelButton="always"
+    (ionCancel)="onCancelSearch()"
+  ></ion-searchbar>
+
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -27,27 +42,36 @@
       </ion-card-header>
     
       <ion-card-content>
-        Leck Eier
+        
       </ion-card-content>
       <ion-button fill="primary" (click)="createRecord()" >Eintrag hinzufügen</ion-button>
     </ion-card>
   }
   @else{
-  <ion-list> 
-    
-    @for (record of records; track record.id) { 
-      <ion-item-sliding #item>
-            <ion-item button (click)="editRecord(record)"> 
-    {{ record.moduleName }} {{ record.moduleNr }} 
-              ({{ 
-    record.grade }}%, {{ record.crp }}crp) 
-            </ion-item> 
-            <ion-item-options>
-              <ion-item-option (click)="deleteRecord(record.id, item)" color="danger"><ion-icon name="trash"></ion-icon></ion-item-option>
-            </ion-item-options>
-      </ion-item-sliding>
-          } 
-          
-  </ion-list> 
+
+    @if(filteredRecords.length === 0){
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Keine passenden Einträge gefunden</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    }
+    @else{
+    <ion-list>    
+
+      @for (record of filteredRecords; track record.id) { 
+        <ion-item-sliding #item>
+              <ion-item button (click)="editRecord(record)"> 
+                  {{ record.moduleName }} {{ record.moduleNr }} 
+                            ({{ 
+                  record.grade }}%, {{ record.crp }}crp) 
+              </ion-item> 
+              <ion-item-options>
+                <ion-item-option (click)="deleteRecord(record.id, item)" color="danger"><ion-icon name="trash"></ion-icon></ion-item-option>
+              </ion-item-options>
+        </ion-item-sliding>
+            }        
+    </ion-list> 
+  }
 }
 </ion-content>
