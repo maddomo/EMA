@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonList, IonItem } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonList, IonItem, IonIcon, IonButton, IonButtons, IonFooter } from '@ionic/angular/standalone';
 import { ModuleService } from '../module.service';
 import { Module } from '../module.model';
 import { ModalController } from '@ionic/angular/standalone';
@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
   templateUrl: './module-picker.page.html',
   styleUrls: ['./module-picker.page.scss'],
   standalone: true,
-  imports: [IonItem, IonList, IonSearchbar, IonContent, IonHeader, CommonModule, FormsModule]
+  imports: [IonFooter, IonButtons, IonButton, IonIcon, IonToolbar, IonItem, IonTitle, IonList, IonSearchbar, IonContent, IonHeader, CommonModule, FormsModule]
 })
 export class ModulePickerPage implements OnInit {
 
   modules: Module[] = []; 
   filteredModules: Module[] = []; 
-  searchbarVisible = true; 
+  searchbarVisible = false; 
   searchText = "";
   #searchbar: IonSearchbar | undefined; 
   @ViewChild(IonSearchbar) 
@@ -52,7 +52,21 @@ export class ModulePickerPage implements OnInit {
     this.modalCtrl.dismiss(null, 'cancel');
    }
 
+   continueWithoutSearch(){
+    this.modalCtrl.dismiss(null, "cancel");
+   }
+
+   openSearch() {
+    this.searchbarVisible = true;
+   }
+
+   closeSearch(){
+    this.searchbarVisible = false;
+   }
+
   ngOnInit() {
   }
+
+  
 
 }

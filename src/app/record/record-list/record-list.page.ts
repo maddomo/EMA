@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlertController,IonSearchbar, IonAlert, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
@@ -26,6 +26,15 @@ export class RecordListPage implements OnInit {
   message = ""
   showSearchbar = true;
   searchText ="";
+
+  #searchbar: IonSearchbar | undefined;
+  @ViewChild(IonSearchbar)
+  set searchbar(sb: IonSearchbar) { 
+    if (sb) { 
+      setTimeout(() => sb.setFocus(), 1)  
+      this.#searchbar = sb; 
+    } 
+  } 
   
  
 

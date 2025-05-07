@@ -1,12 +1,21 @@
 <ion-header> 
-  @if (searchbarVisible) { 
-        <ion-searchbar (ionInput)="doSearch()" 
+  <ion-toolbar color="primary" *ngIf="!searchbarVisible">
+    <ion-title>Wählen sie einen Kurs</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="openSearch()">
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button>  
+      </ion-buttons>
+  </ion-toolbar>
+    <ion-toolbar color="primary" *ngIf="searchbarVisible">
+      <ion-searchbar (ionInput)="doSearch()" 
         [(ngModel)]="searchText" 
-        (ionCancel)="cancelSearch()" 
+        (ionCancel)="closeSearch()" 
         showCancelButton="always" 
         placeholder="Modul suchen"> 
-    </ion-searchbar> 
-  }  
+      </ion-searchbar> 
+  
+    </ion-toolbar> 
   </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -18,3 +27,14 @@
     } 
   </ion-list> 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="cancelSearch()">Abbrechen</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="primary" (click)="continueWithoutSearch()">Überspringen</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
