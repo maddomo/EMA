@@ -101,7 +101,7 @@ export class RecordListPage implements OnInit {
         Share.share({
           title: "Meine Studien Leistungen",
           text: msgText,
-          dialogTitle: "leistungen tielen"
+          dialogTitle: "Leistungen teilen"
         }).then((v) => console.log("ok:", v))
           .catch(err => console.log(err));
       }else {

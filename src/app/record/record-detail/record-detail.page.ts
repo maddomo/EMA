@@ -6,6 +6,10 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, Ion
 import { ReactiveFormsModule } from '@angular/forms';
 import { Record } from '../record.model';
 import { RecordService } from '../record.service';
+import { ModalController } from '@ionic/angular/standalone';
+import { ModulePickerPage } from 'src/app/module/module-picker/module-picker.page';
+import { Module } from 'src/app/module/module.model';
+
 
 @Component({
   selector: 'app-record-detail',
@@ -29,7 +33,8 @@ export class RecordDetailPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private recordService: RecordService,
-              private navCtrl: NavController) {
+              private navCtrl: NavController,
+              private modalController: ModalController ) {
 
     const recordId = route.snapshot.paramMap.get("id");
     
@@ -42,10 +47,25 @@ export class RecordDetailPage implements OnInit {
     } else {
       this.pageTitle = "Leistung erstellen"
       this.record.year = new Date().getFullYear();
-    }
+      this.selectModule();
+   }
     this.initYears();
 
   }
+
+  async selectModule() {
+    const modal = await this.modalController.create({
+      component: ModulePickerPage
+    })
+    await modal.present();
+    const result = await modal.onDidDismiss();
+    const data: Module = result.data;
+    if(data){
+      this.record.moduleName = data.name;
+      this.record.crp = data.crp;
+      this.record.moduleNr = data.nr;
+    }
+  } 
 
   ionViewDidEnter(){
     if(!this.isEditMode){

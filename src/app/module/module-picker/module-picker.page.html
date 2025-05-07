@@ -1,0 +1,20 @@
+<ion-header> 
+  @if (searchbarVisible) { 
+        <ion-searchbar (ionInput)="doSearch()" 
+        [(ngModel)]="searchText" 
+        (ionCancel)="cancelSearch()" 
+        showCancelButton="always" 
+        placeholder="Modul suchen"> 
+    </ion-searchbar> 
+  }  
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    @for (module of filteredModules; track module.nr) { 
+      <ion-item button (click)="modalController.dismiss(module)"> 
+        {{ module.name }} 
+      </ion-item> 
+    } 
+  </ion-list> 
+</ion-content>

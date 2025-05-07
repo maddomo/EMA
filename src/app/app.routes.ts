@@ -13,5 +13,9 @@ export const routes: Routes = [
   {
     path: 'record-detail',
     loadComponent: () => import('./record/record-detail/record-detail.page').then( m => m.RecordDetailPage)
+  },  {
+    path: 'module-picker',
+    loadComponent: () => import('./module/module-picker/module-picker.page').then( m => m.ModulePickerPage)
   },
+
 ];
